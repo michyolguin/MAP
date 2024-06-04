@@ -12,19 +12,27 @@
         .mapboxgl-popup {
             max-width: 800px;
             font: 12px/20px 'Roboto', sans-serif;
-            background-color: rgba(255, 255, 255, 0.0001); /* Semi-transparent white background */
+            background-color: rgba(61, 29, 59, 0.5); /* Background color with transparency */
             border: none; /* Remove border */
             border-radius: 10px; /* Square corners */
             text-transform: uppercase;
-         }
+        }
         .mapboxgl-popup-content {
-        background-color: rgba(255, 255, 255, 0.5); /* Ensure content background matches */
-        border-radius: 10px; /* Square corners for the content */
-         }
-
-         .mapboxgl-popup-close-button {
-        color: #000; /* Adjust close button color if needed */
-
+            background-color: rgba(61, 29, 59, 0.5); /* Ensure content background matches */
+            border-radius: 10px; /* Square corners for the content */
+            color: white; /* White text color */
+        }
+        .mapboxgl-popup-close-button {
+            color: white; /* Adjust close button color */
+        }
+        .read-more {
+            display: block;
+            text-decoration: none;
+            color: white;
+            margin-top: 5px;
+        }
+        .read-more.hidden {
+            display: none;
         }
     </style>
 </head>
@@ -40,44 +48,66 @@
     });
 
     const electionsData = [
-        {"Country": "Mali", "Date": "2024-02-04", "Election Type": "Presidential Elections", "Link": "https://www.graduateinstitute.ch/democracy"},
-        {"Country": "Pakistan", "Date": "2024-02-08", "Election Type": "General Elections", "Link": "https://www.graduateinstitute.ch/democracy"},
-        {"Country": "Indonesia", "Date": "2024-02-14", "Election Type": "General Elections", "Link": "https://www.graduateinstitute.ch/democracy"},
-        {"Country": "El Salvador", "Date": "2024-02-24", "Election Type": "General Elections", "Link": "https://www.graduateinstitute.ch/democracy"},
-        {"Country": "Senegal", "Date": "2024-02-25", "Election Type": "General Elections", "Link": "https://www.graduateinstitute.ch/democracy"},
-        {"Country": "Iran", "Date": "2024-03-01", "Election Type": "Parliamentary Elections", "Link": "https://www.graduateinstitute.ch/democracy"},
-        {"Country": "Russia", "Date": "2024-03-17", "Election Type": "Presidential Elections", "Link": "https://www.graduateinstitute.ch/democracy"},
-        {"Country": "India", "Date": "2024-04", "Election Type": "General Elections", "Link": "https://www.graduateinstitute.ch/democracy"},
-        {"Country": "Panama", "Date": "2024-05-05", "Election Type": "General Elections", "Link": "https://www.graduateinstitute.ch/democracy"},
-        {"Country": "Dominican Republic", "Date": "2024-05-19", "Election Type": "General Elections", "Link": "https://www.graduateinstitute.ch/democracy"},
-        {"Country": "South Africa", "Date": "2024-05-01", "Election Type": "Parliamentary Elections", "Link": "https://www.graduateinstitute.ch/democracy"},
-        {"Country": "Mexico", "Date": "2024-06-02", "Election Type": "General Elections", "Link": "https://www.graduateinstitute.ch/democracy"},
-        {"Country": "European Union", "Date": "2024-06-06", "Election Type": "European Parliament Elections", "Link": "https://www.graduateinstitute.ch/democracy"},
-        {"Country": "Georgia", "Date": "2024-10-24", "Election Type": "Parliamentary Elections", "Link": "https://www.graduateinstitute.ch/democracy"},
-        {"Country": "United States", "Date": "2024-11-24", "Election Type": "General Elections", "Link": "https://www.graduateinstitute.ch/democracy"},
-        {"Country": "Chad", "Date": "2024-10-01", "Election Type": "Presidential Elections", "Link": "https://www.graduateinstitute.ch/democracy"},
-        {"Country": "Uruguay", "Date": "2024-10-27", "Election Type": "General Elections", "Link": "https://www.graduateinstitute.ch/democracy"}
+        {"Country": "India", "Election Type": "Lok Sabha (House of the People)", "Date": "May", "Link": "https://www.youtube.com/watch?v=7Fl2eit41no&pp=ygUaZ3JhZHVhdGUgaW5zdGl0dXRlIGdlbmV2YSA%3D"},
+        {"Country": "France", "Election Type": "European Parliament", "Date": "June 6-9", "Link": "https://www.graduateinstitute.ch/communications/news/european-parliament-far-right-existential-threat"},
+        {"Country": "Germany", "Election Type": "European Parliament", "Date": "June 6-9", "Link": "https://www.graduateinstitute.ch/communications/news/european-parliament-far-right-existential-threat"},
+        {"Country": "United States", "Election Type": "Presidency, Senate, and House of Representatives", "Date": "November 5", "Link": ""},
+        {"Country": "Indonesia", "Election Type": "Presidency, Regional Representative Council, House of Representatives", "Date": "February 14", "Link": "https://www.graduateinstitute.ch/node/67566"},
+        {"Country": "Russian Federation", "Election Type": "Presidency", "Date": "March 15-17", "Link": "https://www.youtube.com/watch?v=3V2pgOpVRm4"},
+        {"Country": "Mexico", "Election Type": "Presidency, Senate, Chamber of Deputies", "Date": "June 2", "Link": "https://www.graduateinstitute.ch/communications/news/mexico-violence-and-democracy"},
+        {"Country": "United Kingdom", "Election Type": "House of Commons", "Date": "July", "Link": ""},
+        {"Country": "South Africa", "Election Type": "National Assembly", "Date": "expected May - August", "Link": "https://www.graduateinstitute.ch/communications/news/south-africa-democracy-promise-redistribution"},
+        {"Country": "Algeria", "Election Type": "Presidency", "Date": "expected in December", "Link": ""},
+        {"Country": "Ghana", "Election Type": "Presidency, Parliament", "Date": "December 7", "Link": ""},
+        {"Country": "Mozambique", "Election Type": "Presidency, Assembly of the Republic", "Date": "October 9", "Link": ""},
+        {"Country": "Madagascar", "Election Type": "National Assembly", "Date": "May", "Link": ""},
+        {"Country": "Venezuela", "Election Type": "Presidency", "Date": "expected in December", "Link": ""},
+        {"Country": "Taiwan", "Election Type": "Presidency, Legislative Yuan", "Date": "January 13", "Link": ""},
+        {"Country": "Mali", "Election Type": "Presidency", "Date": "scheduled for February, junta postponed indefinitely", "Link": ""},
+        {"Country": "Sri Lanka", "Election Type": "Presidency, Parliament", "Date": "TBD", "Link": ""},
+        {"Country": "Romania", "Election Type": "Presidency, Senate, Chamber of Deputies", "Date": "expected November - December", "Link": ""},
+        {"Country": "Chad", "Election Type": "Presidency", "Date": "expected in October", "Link": ""},
+        {"Country": "Senegal", "Election Type": "Presidency", "Date": "February 25", "Link": ""},
+        {"Country": "Rwanda", "Election Type": "Presidency, Chamber of Deputies", "Date": "July 15", "Link": ""},
+        {"Country": "Tunisia", "Election Type": "Presidency", "Date": "expected in September", "Link": ""},
+        {"Country": "Dominican Republic", "Election Type": "Presidency, Senate, Chamber of Deputies", "Date": "May 19", "Link": ""},
+        {"Country": "South Sudan", "Election Type": "Presidency, National Legislature", "Date": "expected in December", "Link": ""},
+        {"Country": "Azerbaijan", "Election Type": "Presidency", "Date": "February 7", "Link": ""},
+        {"Country": "El Salvador", "Election Type": "Presidency, Legislative Assembly", "Date": "February 4", "Link": ""},
+        {"Country": "Slovakia", "Election Type": "Presidency", "Date": "TBD", "Link": ""},
+        {"Country": "Finland", "Election Type": "Presidency", "Date": "January 28", "Link": ""},
+        {"Country": "Mauritania", "Election Type": "Presidency", "Date": "June 22", "Link": ""},
+        {"Country": "Panama", "Election Type": "Presidency, National Assembly", "Date": "May 5", "Link": ""},
+        {"Country": "Croatia", "Election Type": "Presidency, Parliament", "Date": "presidential election expected in December; date of parliamentary elections TBD", "Link": ""},
+        {"Country": "Georgia", "Election Type": "Presidency, Parliament", "Date": "parliamentary elections on October 26; date of presidential election TBD", "Link": ""},
+        {"Country": "Uruguay", "Election Type": "Presidency, Senate, Chamber of Representatives", "Date": "October 27", "Link": ""},
+        {"Country": "Republic of Moldova", "Election Type": "Presidency", "Date": "expected in November", "Link": ""},
+        {"Country": "Lithuania", "Election Type": "Presidency, Seimas", "Date": "May 12", "Link": ""},
+        {"Country": "Namibia", "Election Type": "Presidency, National Assembly", "Date": "TBD", "Link": ""},
+        {"Country": "Guinea Bissau", "Election Type": "Presidency", "Date": "TBD", "Link": ""},
+        {"Country": "North Macedonia", "Election Type": "Presidency, Assembly", "Date": "April 24", "Link": ""},
+        {"Country": "Comoros", "Election Type": "Presidency", "Date": "January 14", "Link": ""},
+        {"Country": "Iceland", "Election Type": "Presidency", "Date": "June 1", "Link": "https://www.graduateinstitute.ch/communications/news/iceland-what-stake-presidential-election"},
+        {"Country": "Kiribati", "Election Type": "Presidency, House of Assembly", "Date": "TBD", "Link": ""},
+        {"Country": "Palau", "Election Type": "Presidency, Senate, House of Delegates", "Date": "November 12", "Link": ""}
     ];
 
     map.on('load', function() {
-        // Assuming 'country-boundaries' exists in your Mapbox style
-        // and 'name_en' is the property for English country names
-        
-        // Create a popup but don't add it to the map yet
         const popup = new mapboxgl.Popup({
             closeButton: false,
             closeOnClick: false
         });
 
         map.on('mousemove', 'country-boundaries', (e) => {
-            const countryName = e.features[0].properties.name_en;
-            const electionInfo = electionsData.find(d => d.Country === countryName);
+            const countryName = e.features[0].properties.name_en.toUpperCase();
+            const electionInfo = electionsData.find(d => d.Country.toUpperCase() === countryName);
 
             if (electionInfo) {
+                const linkVisibility = electionInfo.Link ? '' : 'hidden';
                 const description = `
                     <strong>${electionInfo.Country}</strong>
-                    <p>${electionInfo["Election Type"]}: ${electionInfo.Date}</p>
-                    <a href="${electionInfo.Link}" target="_blank">Read more</a>
+                    <p>type of election: ${electionInfo["Election Type"].toLowerCase()}<br>date: ${electionInfo.Date.toLowerCase()}</p>
+                    <a href="${electionInfo.Link}" target="_blank" class="read-more ${linkVisibility}">Read more</a>
                 `;
 
                 popup.setLngLat(e.lngLat)
@@ -89,26 +119,26 @@
         map.on('mouseleave', 'country-boundaries', () => {
             popup.remove();
         });
-         map.on('click', 'country-boundaries', (e) => {
-            const countryName = e.features[0].properties.name_en;
-            const electionInfo = electionsData.find(d => d.Country === countryName);
+        
+        map.on('click', 'country-boundaries', (e) => {
+            const countryName = e.features[0].properties.name_en.toUpperCase();
+            const electionInfo = electionsData.find(d => d.Country.toUpperCase() === countryName);
 
             if (electionInfo) {
+                const linkVisibility = electionInfo.Link ? '' : 'hidden';
                 const description = `
                     <strong>${electionInfo.Country}</strong>
-                    <p>${electionInfo["Election Type"]}: ${electionInfo.Date}</p>
-                    <a href="${electionInfo.Link}" target="_blank">Read more</a>
+                    <p>type of election: ${electionInfo["Election Type"].toLowerCase()}<br>date: ${electionInfo.Date.toLowerCase()}</p>
+                    <a href="${electionInfo.Link}" target="_blank" class="read-more ${linkVisibility}">Read more</a>
                 `;
 
                 new mapboxgl.Popup()
                     .setLngLat(e.lngLat)
                     .setHTML(description)
                     .addTo(map);
-                    }
+            }
         });
     });
 </script>
 </body>
 </html>
-
-
