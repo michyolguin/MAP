@@ -12,18 +12,18 @@
         .mapboxgl-popup {
             max-width: 800px;
             font: 12px/20px 'Roboto', sans-serif;
-            background-color: rgba(61, 29, 59, 0.5); /* Background color with transparency */
-            border: none; /* Remove border */
-            border-radius: 10px; /* Square corners */
+            background-color: rgba(61, 29, 59, 0.5); /* Bg color + transparence*/
+            border: none;
+            border-radius: 10px; 
             text-transform: uppercase;
         }
-        .mapboxgl-popup-content {
-            background-color: rgba(61, 29, 59, 0.5); /* Ensure content background matches */
-            border-radius: 10px; /* Square corners for the content */
-            color: white; /* White text color */
+        .mapboxgl-popup-content { /*text*/
+            background-color: rgba(61, 29, 59, 0.5);
+            border-radius: 10px; 
+            color: white; 
         }
         .mapboxgl-popup-close-button {
-            color: white; /* Adjust close button color */
+            color: white; 
         }
         .read-more {
             display: block;
@@ -47,7 +47,7 @@
         zoom: 1.5
     });
 
-    const electionsData = [
+    const electionsData = [ /*add links here after each country*/
         {"Country": "India", "Election Type": "Lok Sabha (House of the People)", "Date": "May", "Link": "https://www.youtube.com/watch?v=7Fl2eit41no&pp=ygUaZ3JhZHVhdGUgaW5zdGl0dXRlIGdlbmV2YSA%3D"},
         {"Country": "France", "Election Type": "European Parliament", "Date": "June 6-9", "Link": "https://www.graduateinstitute.ch/communications/news/european-parliament-far-right-existential-threat"},
         {"Country": "Germany", "Election Type": "European Parliament", "Date": "June 6-9", "Link": "https://www.graduateinstitute.ch/communications/news/european-parliament-far-right-existential-threat"},
@@ -98,12 +98,12 @@
             closeOnClick: false
         });
 
-        map.on('mousemove', 'country-boundaries', (e) => {
+        map.on('mousemove', 'country-boundaries', (e) => { /* doesn't work*/
             const countryName = e.features[0].properties.name_en.toUpperCase();
             const electionInfo = electionsData.find(d => d.Country.toUpperCase() === countryName);
 
             if (electionInfo) {
-                const linkVisibility = electionInfo.Link ? '' : 'hidden';
+                const linkVisibility = electionInfo.Link ? '' : 'hidden'; 
                 const description = `
                     <strong>${electionInfo.Country}</strong>
                     <p>type of election: ${electionInfo["Election Type"].toLowerCase()}<br>date: ${electionInfo.Date.toLowerCase()}</p>
